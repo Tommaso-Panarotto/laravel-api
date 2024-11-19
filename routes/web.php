@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Guest\LeadController;
 use App\Http\Controllers\Guest\ProjectController as GuestProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix("/guest")->name("guest.")->group(function () {
     Route::get("/projects", [GuestProjectController::class, "index"])->name("projects.index");
     Route::get("/projects/{id}", [GuestProjectController::class, "show"])->name("projects.show");
+
+    Route::get("/contact-us", [LeadController::class, "create"])->name("leads.create");
+    Route::post("/contact-us", [LeadController::class, "store"])->name("leads.store");
 });
 
 Route::middleware("auth")->prefix("/admin")->name("admin.")->group(function () {
